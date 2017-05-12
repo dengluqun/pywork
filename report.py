@@ -1,4 +1,4 @@
-# -*- coding:utf-8 -*-
+# -*- coding:gbk -*-
 
 f=open(r'D:\gitwork\hubpywork\report.txt')
 reportlines=f.readlines()
@@ -6,37 +6,67 @@ reportlines=f.readlines()
 f.close()
 
 reportline=[]
-sum_avg=[]  #æ¯ä¸ªå­¦ç”Ÿçš„æ€»åˆ†å’Œå¹³å‡åˆ†
-sumzong=[]  #æ¯ä¸€ç§‘çš„å¹³å‡åˆ†
+sumstu=[]  #Ã¿¸öÑ§ÉúµÄ×Ü·ÖºÍÆ½¾ù·Ö
+avgstu=[]  #Ã¿¸öÑ§ÉúµÄÆ½¾ù·Ö
+sumzong=[]  #Ã¿Ò»¿ÆµÄÆ½¾ù·Ö
+result=[]
 
-sumzong.append('å¹³å‡')
+sumzong.append('Æ½¾ù')
 for k in range(1,10):
     sumzong.append(0)
     
-for report in reportlines[:2]:
+for report in reportlines:
     reportline=report.split()
-#    stu=reportline[0]
+    #print reportline
     
     for n in range(1,10):
-        reportline[n]=int(reportline[n]) #æ¯ä¸ªå­¦ç”Ÿçš„æˆç»©è½¬æ¢ä¸ºæ•°å­—
-        sumzong[n]+=reportline[n]
+        reportline[n]=int(reportline[n]) #Ã¿¸öÑ§ÉúµÄ³É¼¨×ª»»ÎªÊı×Ö
+        sumzong[n]+=reportline[n] #Ã¿Ò»¿ÆµÄ×Ü·Ö
 
-    sum1=sum(reportline[1:])#è®¡ç®—æ¯ä¸ªå­¦ç”Ÿçš„æ€»åˆ†
-    avg=float(sum1/9)#è®¡ç®—æ¯ä¸ªå­¦ç”Ÿçš„å¹³å‡åˆ†
-    sum_avg.append('%d %.1f'%(sum1,avg))
-
+    sum1=sum(reportline[1:])#¼ÆËãÃ¿¸öÑ§ÉúµÄ×Ü·Ö
+    avg=float(sum1/9)#¼ÆËãÃ¿¸öÑ§ÉúµÄÆ½¾ù·Ö
+    '''sumstu.append(sum1)
+    avgstu.append(avg)'''
+    reportline.append(sum1)
+    reportline.append(avg)
+    result.append(reportline)
+    
+    
+#print result
 zong=0
-for i in range(1,10):
-    sumzong[i]=sumzong[i]/2
+for i in range(1,10):  #¼ÆËã×ÜµÄ×Ü·Ö¼°×ÜÆ½¾ù·Ö
+    sumzong[i]=sumzong[i]/len(reportlines) #¼ÆËãÃ¿Ò»¿ÆµÄÆ½¾ù·Ö
     zong+=sumzong[i]
 
 sumzong.append(zong)
 sumzong.append(float(zong/9))
 
-print sumzong
-print sum_avg
+#for n in range(len(reportlines)):
+result2=[]
+result2.append(sumzong)
+result1=sorted(result[1:],key=lambda x:x[10],reverse=True)
 
-        
+for n in result1:
+    result2.append(n)
 
-    
+for n in range(1,len(result2)):
+    for i in range(1,10):
+        if result2[n][i]<60:
+            result2[n][i]='²»¼°¸ñ'
+#print result2
+
+for n in range(len(result2)):
+    for i in range(1,12):
+        result2[n][i]=str(result2[n][i])
+            
+jieguo=[]
+for k in range(len(result2)):
+   jieguo.append(' '.join(result2[k])+'\n')
+
+#print jieguo
+
+file1=open(r'D:\gitwork\hubpywork\result.txt','w')
+file1.writelines(jieguo)
+file1.close()
+
 
