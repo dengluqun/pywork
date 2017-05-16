@@ -2,7 +2,7 @@
 
 f=open(r'D:\gitwork\hubpywork\report.txt')
 reportlines=f.readlines()
-#print reportlines
+
 f.close()
 
 reportline=[]
@@ -32,7 +32,6 @@ for report in reportlines:
     result.append(reportline)
     
     
-#print result
 zong=0
 for i in range(1,10):  #计算总的总分及总平均分
     sumzong[i]=sumzong[i]/len(reportlines) #计算每一科的平均分
@@ -41,29 +40,27 @@ for i in range(1,10):  #计算总的总分及总平均分
 sumzong.append(zong)
 sumzong.append(float(zong/9))
 
-#for n in range(len(reportlines)):
+result1=sorted(result[1:],key=lambda x:x[10],reverse=True)#排序
+
 result2=[]
 result2.append(sumzong)
-result1=sorted(result[1:],key=lambda x:x[10],reverse=True)
-
 for n in result1:
     result2.append(n)
 
-for n in range(1,len(result2)):
+
+for n in range(len(result2)):
     for i in range(1,10):
         if result2[n][i]<60:
             result2[n][i]='不及格'
-#print result2
-
-for n in range(len(result2)):
-    for i in range(1,12):
+    for i in range(12):
         result2[n][i]=str(result2[n][i])
-            
+        
 jieguo=[]
+jieguo.append('%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\n'%('名称','姓名','语文','数学','英语','物理',
+                                                                '化学','生物','政治','历史','地理','总分','平均分'))
 for k in range(len(result2)):
-   jieguo.append(' '.join(result2[k])+'\n')
+   jieguo.append('%d\t'%k+'\t'.join(result2[k])+'\n')
 
-#print jieguo
 
 file1=open(r'D:\gitwork\hubpywork\result.txt','w')
 file1.writelines(jieguo)
